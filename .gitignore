@@ -3,6 +3,7 @@ venv/
 __pycache__/
 .env
 sqllite.db
+.pytest_cache/
 
 # dependencies
 node_modules/

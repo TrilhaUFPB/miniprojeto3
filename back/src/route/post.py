@@ -29,7 +29,7 @@ def read_post(
     post = session.get(Post, id_post)
 
     if not post:
-        raise HTTPException(status_code=404, detail="Post not found")
+        raise HTTPException(status_code=204, detail="Post not found")
     
     return post
 
@@ -44,7 +44,7 @@ def create_post(
     user = session.get(User, post.id_user)
     
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=204, detail="User not found")
 
     session.add(db_post)
     session.commit()
@@ -61,7 +61,7 @@ def update_post(
     post_db = session.get(Post, id_post)
     
     if not post_db:
-        raise HTTPException(status_code=404, detail="Post not found")
+        raise HTTPException(status_code=204, detail="Post not found")
     
     post_data = post.model_dump(exclude_unset=True)
     post_db.sqlmodel_update(post_data)
@@ -80,7 +80,7 @@ def delete_post(
     post = session.get(Post, id_post)
     
     if not post:
-        raise HTTPException(status_code=404, detail="Post not found")
+        raise HTTPException(status_code=204, detail="Post not found")
     
     session.delete(post)
     session.commit()

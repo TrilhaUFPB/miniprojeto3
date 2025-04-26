@@ -25,7 +25,7 @@ def read_interaction(
     interaction = session.get(Interaction, id_intc)
 
     if not interaction:
-        raise HTTPException(status_code=404, detail="Interaction not found")
+        raise HTTPException(status_code=204, detail="Interaction not found")
 
     return interaction
 
@@ -40,12 +40,12 @@ def create_post(
     user = session.get(User, interaction.id_user)
     
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=204, detail="User not found")
 
     post = session.get(Post, interaction.id_post)
 
     if not post:
-        raise HTTPException(status_code=404, detail="Post not found")
+        raise HTTPException(status_code=204, detail="Post not found")
 
     try:
         session.add(db_interaction)
@@ -65,7 +65,7 @@ def update_interaction(
     interaction_db = session.get(Interaction, id_intc)
     
     if not interaction_db:
-        raise HTTPException(status_code=404, detail="Interaction not found")
+        raise HTTPException(status_code=204, detail="Interaction not found")
     
     interaction_data = interaction.model_dump(exclude_unset=True)
     interaction_db.sqlmodel_update(interaction_data)
@@ -84,7 +84,7 @@ def delete_interaction(
     interaction = session.get(Interaction, id_intc)
 
     if not interaction:
-        raise HTTPException(status_code=404, detail="Interaction not found")
+        raise HTTPException(status_code=204, detail="Interaction not found")
 
     session.delete(interaction)
     session.commit()

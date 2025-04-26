@@ -25,7 +25,7 @@ def read_user(
     user = session.get(User, id_user)
     
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=204, detail="User not found")
     
     return user
 
@@ -59,7 +59,7 @@ def login_user(
             .filter(User.password == user.password)
         ).one()
     except:
-        raise HTTPException(status_code=404, detail="User or Password invalid.")
+        raise HTTPException(status_code=401, detail="User or Password invalid.")
     
     return user
 
@@ -71,7 +71,7 @@ def delete_user(
     user = session.get(User, id_user)
 
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=204, detail="User not found")
 
     session.delete(user)
     session.commit()

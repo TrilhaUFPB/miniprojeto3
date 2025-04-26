@@ -44,14 +44,15 @@ export default function Post({ post_data, id_user }: Data) {
                     {
                         post.id_user == id_user ? (
                             <div>
-                                <Button color="green">Editar</Button>
-                                <Button color="red">Excluir</Button>
+                                <Button variant="secondary">Editar</Button>
+                                <Button variant="destructive">Excluir</Button>
                             </div>
-                        ): null
+                        ):  
+                        <div>
+                            <Button  variant="secondary">Like</Button>
+                            <Button variant="destructive">Dislike</Button>
+                        </div>
                     }
-
-                    <Button color="green">Like</Button>
-                    <Button color="red">Dislike</Button>
 
                     <Popover>
                       <PopoverTrigger>...</PopoverTrigger>
