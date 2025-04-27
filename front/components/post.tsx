@@ -4,7 +4,10 @@ import {
     PopoverContent,
     PopoverTrigger,
   } from "@/components/ui/popover"
-  
+import Spinner from "./spinner";
+
+import { useState } from "react";
+
 type User = {
     id_user: number
     name: string
@@ -32,40 +35,115 @@ type Data = {
     id_user: number
 }
 
-export default function Post({ post_data, id_user }: Data) {
+export default function Post(
+    { post_data, id_user }: Data
+) {
+    const [loading, setLoading] = useState(false)
+
+    function handleInteraction(
+        is_like: boolean, 
+        id_user: number, 
+        id_post: number, 
+    ) {
+        setLoading(true)
+
+        fetch("http://localhost:8000/api/interaction", 
+            {
+                "method": "POST",
+                "body": JSON.stringify(
+                    {
+                        "is_like": is_like, 
+                        "id_post": id_post,
+                        "id_user": id_user
+                    }
+                ),
+                "headers": {"Content-type": "application/json"}
+            }
+        ).then(async (e) => {
+            const response = await e.json()
+            console.log(response)
+            setLoading(false)
+        })
+    }
+
+    function handleExcluir(id_post: number){
+        setLoading(true)
+
+        fetch(`http://localhost:8000/api/post/${id_post}`,{
+            "method": "DELETE"
+        }).then(async (e) => {
+            const response = await e.json()
+            console.log(response)
+            setLoading(false)
+        })   
+    }
+
     return (
-        <div>
-          {
+        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl my-6 p-6">
+        {
             post_data.map((post) => (
                 <div key={post.id_post}>
-                    <h1>{post.user.name}</h1>
-                    <p>{post.content}</p>
-
-                    {
-                        post.id_user == id_user ? (
-                            <div>
-                                <Button variant="secondary">Editar</Button>
-                                <Button variant="destructive">Excluir</Button>
-                            </div>
-                        ):  
-                        <div>
-                            <Button  variant="secondary">Like</Button>
-                            <Button variant="destructive">Dislike</Button>
+                    <div className="flex items-center justify-between items-center mb-2">
+                        <div className="font-bold text-gray-800">
+                            {post.user.name}
                         </div>
+                        { 
+                            post.id_user == id_user ? (
+                                <div className="flex items-center justify-between space-x-2">
+                                    <Button onClick={() => handleExcluir(post.id_post)}size="sm" className="bg-red-500 hover:bg-red-600 active:bg-red-700">
+                                        {loading ? <Spinner/> : <p>Excluir</p>}
+                                    </Button>
+                                </div>
+                            ) : null
+                        }
+                    </div>
+
+                    <div className="text-gray-600 mb-4 ml-4">
+                        {post.content}
+                    </div>
+
+                    <div className={`flex items-center justify-between ${post.id_user == id_user ? "flex-row-reverse": ""}`}>
+                    {
+                        post.id_user != id_user ? (
+                                <div>
+                                    <Button onClick={() => handleInteraction(true, id_user, post.id_post)}  size="sm" className="bg-green-500 hover:bg-green-600 active:bg-green-700">
+                                        {loading ? <Spinner/> : <p>Like</p>}
+                                    </Button>
+                                    <Button onClick={() => handleInteraction(false, id_user, post.id_post)}  size="sm" className="bg-red-500 hover:bg-red-600 active:bg-red-700 ml-2">
+                                        {loading ? <Spinner/> : <p>Dislike</p>}
+                                    </Button>
+                                </div>
+                        ): null
                     }
 
                     <Popover>
-                      <PopoverTrigger>...</PopoverTrigger>
-                        <PopoverContent>
-                            {
-                                post.interaction.map((e) => (
-                                    <div key={post.id_post}>
-                                        {e.user.name}, {e.is_like == true ? <p>oi</p> : <p>tchau</p>}
-                                    </div>
-                                ))
-                            }
-                        </PopoverContent>
-                    </Popover>
+                        <PopoverTrigger className="text-3xl">
+                            ...
+                        </PopoverTrigger>
+                            <PopoverContent>
+                                <p className="flex items-center justify-center">Reações</p>
+                                <hr className="mt-2 mb-2"/>
+                                {
+                                    post.interaction.map((e) => (
+                                        <div key={e.id_intc} className="flex items-center justify-between mb-2">
+                                            {e.user.name || "Anônimo"}
+                                            {
+                                                e.is_like === true ? 
+                                                    <Button size="sm" className="bg-green-500 hover:bg-green-600 active:bg-green-700"> 
+                                                        Like
+                                                    </Button> : 
+                                                    <Button size="sm" className="bg-red-500 hover:bg-red-600 active:bg-red-700"> 
+                                                        Dislike
+                                                    </Button>
+                                            }
+                                        </div>
+                                    ))
+                                }
+                            </PopoverContent>
+                        </Popover>
+                    </div>
+
+                    <hr className="mt-5 mb-5"/>
                 </div>
             ))
           }

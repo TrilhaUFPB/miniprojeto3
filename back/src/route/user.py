@@ -25,7 +25,7 @@ def read_user(
     user = session.get(User, id_user)
     
     if not user:
-        raise HTTPException(status_code=204, detail="User not found")
+        raise HTTPException(status_code=204, detail="User not found.")
     
     return user
 
@@ -53,15 +53,19 @@ def login_user(
     user: UserCreate
 ):
     try:
-        session.exec(
+        data = session.exec(
             select(User)
             .filter(User.name == user.name)
             .filter(User.password == user.password)
         ).one()
+        
+        if not user:
+            raise HTTPException(status_code=204, detail="User not found.")
+ 
     except:
         raise HTTPException(status_code=401, detail="User or Password invalid.")
     
-    return user
+    return data
 
 @user_router.delete("/{id_user}")
 def delete_user(
@@ -71,7 +75,7 @@ def delete_user(
     user = session.get(User, id_user)
 
     if not user:
-        raise HTTPException(status_code=204, detail="User not found")
+        raise HTTPException(status_code=204, detail="User not found.")
 
     session.delete(user)
     session.commit()

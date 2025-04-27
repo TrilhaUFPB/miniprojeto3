@@ -6,6 +6,7 @@ sqllite.db
 .pytest_cache/
 
 # dependencies
+package-lock.json
 node_modules/
 /.pnp
 .pnp.*
