@@ -52,7 +52,10 @@ export default function Register() {
             }
         ).then((e) => {
             if (e.status != 200) setResponse("Erro ao registrar.")
-            else setResponse("Registrado com sucesso. Agore efetue o Login.")
+            else { 
+                setResponse("Registrado com sucesso. Agore efetue o Login.")
+                window.location.reload()
+            }
         }).catch((e) => {
             setResponse("Erro ao registrar.")
         })
