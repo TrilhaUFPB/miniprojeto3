@@ -8,18 +8,20 @@ O objetivo dessa aplicação, é que vocês desenvolvam habilidades práticas no
 
 Não há um "gabarito" para esse projeto. Entretanto, há certas funcionalidades que são **obrigatórias**.
 
-Logo, a sua implementação não precisa estar igual à minha ou à de terceiros. O que importa, e será avaliado é: a entrega de todas as funcionalidades abaixo e a qualidade com que elas foram implementadas.
+Logo, a sua implementação não precisa estar igual à minha ou à de terceiros. O que importa, e será avaliado, é: a entrega de todas as funcionalidades abaixo e a qualidade com que elas foram implementadas.
 
-| Funcionalidade | Ambiente | Obrigatório |
-| --- | --- | --- |
-| Modelagem do problema em um banco de dados estruturado | Banco de Dados | :white_check_mark: |
-| Login de usuário | Todos | :white_check_mark: |
-| Registro de usuário | Todos | :white_check_mark: |
-| Autenticação e autorização de usuário | Todos | :white_check_mark: |
-| CRUD de postagens | Todos | :white_check_mark: |
-| Like ou dislike por usuário nas postagens | Todos | :white_check_mark: |
-| Listagem de likes e dislikes por postagem | Todos | :white_check_mark: |
-| Imagens ou videos nas postagens | Todos | :x: | 
+| Funcionalidade / Requisito                                                                                                                      | Obrigatório          | Entidades Envolvidas         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ---------------------------- |
+| Autenticação (Login e Registrar) apenas com nome e senha do usuário                                                                              | :white\_check\_mark: | Usuário                      |
+| Usuários **não** podem possuir nomes iguais                                                                                                     | :white\_check\_mark: | Usuário                      |
+| CRUD de postagens (criar, editar, excluir, listar)                                                                                              | :white\_check\_mark: | Usuário, Postagem            |
+| O Usuário pode realizar apenas uma interação por postagem, porém pode alterá-la                                                 | :white\_check\_mark: | Usuário, Postagem, Interação |
+| Exibir em cada postagem: nome do autor, conteúdo e lista completa de interações com autor e qual interação | :white\_check\_mark: | Usuário, Postagem, Interação |
+| Usuários autenticados terão botões específicos nas postagens:<br>- **Autor:** botões Editar e Excluir<br>- **Não autor:** botões Like e Dislike | :white\_check\_mark: | Usuário, Postagem, Interação |
+| Telas necessárias: Login, Registrar, Feed e Criar postagem<br>- O feed é a pagina principal. Nela contém todos os posts. | :white\_check\_mark: | Usuário, Postagem, Interação |
+| Suporte a imagens ou vídeos nas postagens                                                                                                       | :x:                  | Postagem                     |
+
+> Interações = like ou dislike.
 
 ## Exemplo
 
@@ -29,7 +31,7 @@ Este repositório é apenas um exemplo de implementação e, em caso de plágio,
 
 #### Frontend
 
-Necessário ter Node.js instalado:
+Necessário ter [node.js](https://nodejs.org/en/download) instalado:
 
 ```bash
 cd front
@@ -40,7 +42,7 @@ npm run dev
 
 #### Backend
 
-Necessário ter Python instalado:
+Necessário ter [Python](https://www.python.org/downloads/) instalado:
 
 ```bash
 pip install sqlmodel fastapi[standard]
@@ -49,7 +51,11 @@ cd back/src
 python -m fastapi dev
 ```
 
-## Referências
+## Referências e Links Úteis
 
-- https://fastapi.tiangolo.com/tutorial/sql-databases/
-- https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+- [FastAPI](https://fastapi.tiangolo.com/tutorial/sql-databases/)
+- [Next](https://nextjs.org/docs)
+- [shadcn](https://ui.shadcn.com/)
+- [Repositório da aula Frontend](https://github.com/guilhermehuther/backend-basics/tree/fastapi)
+- [Extensão do VSCode para requisições HTTP](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+- [Extensão do VSCode para vizualizar arquivos do sqllite](https://marketplace.visualstudio.com/items/?itemName=qwtel.sqlite-viewer)
