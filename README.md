@@ -27,6 +27,8 @@ Logo, a sua implementação não precisa estar igual à minha ou à de terceiros
 
 Este repositório é apenas um exemplo de implementação e, em caso de plágio, seu trabalho será descartado. Logo, utilize-o apenas para consulta e ideias.
 
+![img](./docs/diagram.png)
+
 ### Para executar
 
 #### Frontend
